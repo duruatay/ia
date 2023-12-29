@@ -5,8 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DuruScheduleFrame extends JFrame {
-    public DuruScheduleFrame() {
+public class DaughterScheduleFrame extends JFrame {
+    public DaughterScheduleFrame() {
         // Initialize the frame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Week Planner");
@@ -41,7 +41,7 @@ public class DuruScheduleFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Add functionality
-                JOptionPane.showMessageDialog(DuruScheduleFrame.this, "Add functionality");
+                JOptionPane.showMessageDialog(DaughterScheduleFrame.this, "Add functionality");
             }
         });
 
@@ -50,7 +50,7 @@ public class DuruScheduleFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Add functionality
-                JOptionPane.showMessageDialog(DuruScheduleFrame.this, "Add functionality");
+                JOptionPane.showMessageDialog(DaughterScheduleFrame.this, "Add functionality");
             }
         });
 
@@ -69,7 +69,7 @@ public class DuruScheduleFrame extends JFrame {
         planner2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new DuruScheduleFrame().setVisible(true);
+                new DaughterScheduleFrame().setVisible(true);
                 setVisible(false);
                 dispose();
             }

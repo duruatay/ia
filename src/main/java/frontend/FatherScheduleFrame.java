@@ -68,7 +68,7 @@ public class FatherScheduleFrame extends JFrame {
         planner2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new DuruScheduleFrame().setVisible(true);
+                new DaughterScheduleFrame().setVisible(true);
                 setVisible(false);
                 dispose();
             }

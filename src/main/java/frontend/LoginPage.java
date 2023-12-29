@@ -43,6 +43,8 @@ public class LoginPage extends JFrame {
                 // Add your authentication logic here
                 if ("duru".equals(username) && "password".equals(password)) {
                     JOptionPane.showMessageDialog(LoginPage.this, "Login successful!");
+                    DaughterScheduleFrame dghtr = new DaughterScheduleFrame();
+                    dispose();
                 } else {
                     JOptionPane.showMessageDialog(LoginPage.this, "Login failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
