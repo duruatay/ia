@@ -40,8 +40,8 @@ public class DaughterScheduleFrame extends JFrame {
         addItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Add functionality
-                JOptionPane.showMessageDialog(DaughterScheduleFrame.this, "Add functionality");
+                new AddPlanFrame().setVisible(true);
+
             }
         });
 
