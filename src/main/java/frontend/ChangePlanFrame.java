@@ -1,11 +1,15 @@
 package frontend;
 
+import backend.controller.PlanController;
+import backend.service.PlanService;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ChangePlanFrame extends JFrame {
+    private PlanController planController;
     private JTextField currentNameField;
     private JTextField newNameField;
     private JTextField dayField;
@@ -13,10 +17,12 @@ public class ChangePlanFrame extends JFrame {
     private JTextField endTimeField;
 
     public ChangePlanFrame() {
+        planController = new PlanController();
+
         // Set frame properties
         setTitle("Change Plan");
         setSize(300, 200);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // Create and set layout manager
         setLayout(new GridLayout(6, 2));
@@ -38,6 +44,23 @@ public class ChangePlanFrame extends JFrame {
         endTimeField = new JTextField();
 
         JButton changeButton = new JButton("Change Plan");
+        changeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Call a method to handle changing the plan with the provided inputs
+                if(planController.changePlan(currentNameField.getText(),
+                                            newNameField.getText(),
+                                            dayField.getText(),
+                                            startTimeLabel.getText(),
+                                            endTimeField.getText())){
+                    JOptionPane.showMessageDialog(ChangePlanFrame.this, "Plan changed successfully!");
+                    dispose();
+                }else {
+                    JOptionPane.showMessageDialog(ChangePlanFrame.this, "Plan could not be changed!");
+                    dispose();
+                }
+            }
+        });
 
         // Add components to the frame
         add(currentNameLabel);
@@ -50,44 +73,8 @@ public class ChangePlanFrame extends JFrame {
         add(startTimeField);
         add(endTimeLabel);
         add(endTimeField);
-        add(new JLabel()); // Empty label for spacing
+        add(new JLabel());
         add(changeButton);
 
-        // Add action listener to the button
-        changeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Call a method to handle changing the plan with the provided inputs
-                changePlan();
-            }
-        });
-    }
-
-    private void changePlan() {
-        // Retrieve inputs from the text fields
-        String currentName = currentNameField.getText();
-        String newName = newNameField.getText();
-        String day = dayField.getText();
-        String startTime = startTimeField.getText();
-        String endTime = endTimeField.getText();
-
-        // Perform the logic to change the plan (you can modify this part based on your requirements)
-        System.out.println("Plan changed: " + currentName + " to " + newName + ", " + day + ", " + startTime + " - " + endTime);
-
-        // Clear the input fields after changing the plan
-        currentNameField.setText("");
-        newNameField.setText("");
-        dayField.setText("");
-        startTimeField.setText("");
-        endTimeField.setText("");
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new ChangePlanFrame().setVisible(true);
-            }
-        });
     }
 }

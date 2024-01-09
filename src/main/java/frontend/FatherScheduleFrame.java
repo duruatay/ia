@@ -9,7 +9,7 @@ public class FatherScheduleFrame extends JFrame {
     public FatherScheduleFrame() {
         // Initialize the frame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Week Planner");
+        setTitle("Fathers' Weekly Planner");
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(400, 300));
 
@@ -40,8 +40,7 @@ public class FatherScheduleFrame extends JFrame {
         addItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Add functionality
-                JOptionPane.showMessageDialog(FatherScheduleFrame.this, "Add functionality");
+                new AddPlanFrame().setVisible(true);
             }
         });
 
@@ -49,8 +48,7 @@ public class FatherScheduleFrame extends JFrame {
         changeItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Add functionality
-                JOptionPane.showMessageDialog(FatherScheduleFrame.this, "Add functionality");
+                new ChangePlanFrame().setVisible(true);
             }
         });
 

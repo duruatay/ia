@@ -19,7 +19,7 @@ public class NotificationsFrame extends JFrame {
 
     private void initComponents() {
         setTitle("Notifications Frame");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 300);
         setLocationRelativeTo(null);
 

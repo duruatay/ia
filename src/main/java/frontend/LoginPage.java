@@ -1,22 +1,27 @@
 package frontend;
 
+import backend.controller.LoginController;
+import backend.model.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoginPage extends JFrame {
-
+    private LoginController loginController;
     private JTextField usernameField;
     private JPasswordField passwordField;
 
     public LoginPage() {
+        loginController = new LoginController();
         initComponents();
     }
 
     private void initComponents() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Login Page");
+        setResizable(false);
 
         JPanel mainPanel = new JPanel(new GridLayout(3, 2, 10, 10));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -32,28 +37,7 @@ public class LoginPage extends JFrame {
         usernameField.setPreferredSize(textFieldSize);
         passwordField.setPreferredSize(textFieldSize);
 
-        JButton loginButton = new JButton("Login");
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                char[] passwordChars = passwordField.getPassword();
-                String password = new String(passwordChars);
-
-                // Add your authentication logic here
-                if ("duru".equals(username) && "password".equals(password)) {
-                    JOptionPane.showMessageDialog(LoginPage.this, "Login successful!");
-                    DaughterScheduleFrame dghtr = new DaughterScheduleFrame();
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(LoginPage.this, "Login failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-
-                // Clear fields after login attempt
-                usernameField.setText("");
-                passwordField.setText("");
-            }
-        });
+        JButton loginButton = getLoginButton();
 
         mainPanel.add(usernameLabel);
         mainPanel.add(usernameField);
@@ -69,5 +53,37 @@ public class LoginPage extends JFrame {
         setVisible(true);
     }
 
+    private JButton getLoginButton() {
+        JButton loginButton = new JButton("Login");
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = usernameField.getText();
+                char[] passwordChars = passwordField.getPassword();
+                String password = new String(passwordChars);
+
+                User user = loginController.login(username, password);
+
+                if(user == null){
+                    JOptionPane.showMessageDialog(LoginPage.this, "Login failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                }else if(user.isDaughter()) {
+                    JOptionPane.showMessageDialog(LoginPage.this, "Login successful!");
+                    DaughterScheduleFrame dghtr = new DaughterScheduleFrame();
+                    dispose();
+                }else {
+                    JOptionPane.showMessageDialog(LoginPage.this, "Login successful!");
+                    FatherScheduleFrame father = new FatherScheduleFrame();
+                    father.setVisible(true);
+                    dispose();
+                }
+
+                // Clear fields after login attempt
+                usernameField.setText("");
+                passwordField.setText("");
+            }
+        });
+
+        return loginButton;
+    }
 
 }

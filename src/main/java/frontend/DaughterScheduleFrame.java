@@ -9,7 +9,7 @@ public class DaughterScheduleFrame extends JFrame {
     public DaughterScheduleFrame() {
         // Initialize the frame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Week Planner");
+        setTitle("Daughters' Weekly Planner");
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(400, 300));
 
@@ -41,7 +41,6 @@ public class DaughterScheduleFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new AddPlanFrame().setVisible(true);
-
             }
         });
 
@@ -49,8 +48,7 @@ public class DaughterScheduleFrame extends JFrame {
         changeItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Add functionality
-                JOptionPane.showMessageDialog(DaughterScheduleFrame.this, "Add functionality");
+                new ChangePlanFrame().setVisible(true);
             }
         });
 
@@ -80,8 +78,6 @@ public class DaughterScheduleFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new NotificationsFrame().setVisible(true);
-                setVisible(false);
-                dispose();
             }
         });
 
@@ -115,7 +111,6 @@ public class DaughterScheduleFrame extends JFrame {
                 schedulePanel.add(textArea);
             }
         }
-
         return schedulePanel;
     }
 

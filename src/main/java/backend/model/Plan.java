@@ -1,15 +1,13 @@
 package backend.model;
 
 
-import java.time.LocalTime;
-
 public class Plan {
     private String name;
     private String day;
-    private LocalTime start;
-    private LocalTime end;
+    private String start;
+    private String end;
 
-    public Plan(String name, String day, LocalTime start, LocalTime end){
+    public Plan(String name, String day, String start, String end){
         this.name = name;
         this.day = day;
         this.start = start;
@@ -32,19 +30,19 @@ public class Plan {
         this.day = day;
     }
 
-    public LocalTime getStart() {
+    public String getStart() {
         return start;
     }
 
-    public void setStart(LocalTime start) {
+    public void setStart(String start) {
         this.start = start;
     }
 
-    public LocalTime getEnd() {
+    public String getEnd() {
         return end;
     }
 
-    public void setEnd(LocalTime end) {
+    public void setEnd(String end) {
         this.end = end;
     }
 

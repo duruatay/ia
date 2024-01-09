@@ -1,21 +1,27 @@
 package frontend;
 
+import backend.controller.PlanController;
+import backend.service.PlanService;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AddPlanFrame extends JFrame {
+    private PlanController planController;
     private JTextField nameField;
     private JTextField dayField;
     private JTextField startTimeField;
     private JTextField endTimeField;
 
     public AddPlanFrame() {
+        planController = new PlanController();
+
         // Set frame properties
         setTitle("Add Plan");
         setSize(300, 200);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // Create and set layout manager
         setLayout(new GridLayout(5, 2));
@@ -34,6 +40,18 @@ public class AddPlanFrame extends JFrame {
         endTimeField = new JTextField();
 
         JButton addButton = new JButton("Add Plan");
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (planController.addPlan(nameField.getText(), dayField.getText(), startTimeLabel.getText(), endTimeLabel.getText())) {
+                    JOptionPane.showMessageDialog(AddPlanFrame.this, "Plan added successfully!");
+                    dispose();
+                }else {
+                    JOptionPane.showMessageDialog(AddPlanFrame.this, "Plan could not be added!");
+                    dispose();
+                }
+            }
+        });
 
         // Add components to the frame
         add(nameLabel);
@@ -72,15 +90,6 @@ public class AddPlanFrame extends JFrame {
         dayField.setText("");
         startTimeField.setText("");
         endTimeField.setText("");
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new AddPlanFrame().setVisible(true);
-            }
-        });
     }
 }
 
