@@ -1,11 +1,15 @@
 package frontend;
 
+import backend.controller.PlanController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class FatherScheduleFrame extends JFrame {
+    private final PlanController planController = PlanController.getInstance();
+
     public FatherScheduleFrame() {
         // Initialize the frame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

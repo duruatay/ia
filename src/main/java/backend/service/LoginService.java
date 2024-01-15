@@ -19,6 +19,7 @@ public class LoginService {
 
 
     public User login(String username, String password) {
+        // TODO: Add validation logic on the input data. If valid continue with the logic below, else return null.
         for(User user: users) {
             if(username.equals(user.getUsername()) && password.equals(user.getPassword())) {
                 SessionInfo.DAUGHTER_SESSION = user.isDaughter();

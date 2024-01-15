@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ChangePlanFrame extends JFrame {
-    private PlanController planController;
+    private final PlanController planController = PlanController.getInstance();
     private JTextField currentNameField;
     private JTextField newNameField;
     private JTextField dayField;
@@ -17,8 +17,6 @@ public class ChangePlanFrame extends JFrame {
     private JTextField endTimeField;
 
     public ChangePlanFrame() {
-        planController = new PlanController();
-
         // Set frame properties
         setTitle("Change Plan");
         setSize(300, 200);

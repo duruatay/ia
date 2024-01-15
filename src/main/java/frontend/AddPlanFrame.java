@@ -9,15 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AddPlanFrame extends JFrame {
-    private PlanController planController;
+    private final PlanController planController = PlanController.getInstance();
     private JTextField nameField;
     private JTextField dayField;
     private JTextField startTimeField;
     private JTextField endTimeField;
 
     public AddPlanFrame() {
-        planController = new PlanController();
-
         // Set frame properties
         setTitle("Add Plan");
         setSize(300, 200);

@@ -7,9 +7,17 @@ import java.util.List;
 
 public class PlanController {
     private final PlanService planService;
+    private static PlanController instance;
 
-    public PlanController() {
+    private PlanController() {
         planService = new PlanService();
+    }
+
+    public static PlanController getInstance() {
+        if(instance == null) {
+            instance = new PlanController();
+        }
+        return instance;
     }
 
     public boolean addPlan(String name, String day, String startTime, String endTime) {
@@ -22,5 +30,13 @@ public class PlanController {
 
     public List<Plan> getPlans() {
         return planService.getPlans();
+    }
+
+    public List<Plan> getDaughterPlans() {
+        return planService.getDaughterPlans();
+    }
+
+    public List<Plan> getFatherPlans() {
+        return planService.getFatherPlans();
     }
 }
