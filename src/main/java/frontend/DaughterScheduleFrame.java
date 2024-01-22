@@ -170,7 +170,7 @@ public class DaughterScheduleFrame extends JFrame {
             }
 
             for(int i = (startRow * 7) + column; i < (endRow * 7) + column; i += 7) {
-                textAreas.get(i).setText(plan.getName());
+                textAreas.get(i).setText(textAreas.get(i).getText() + "\n" + plan.getName());
             }
         }
     }

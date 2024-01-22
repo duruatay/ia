@@ -2,17 +2,19 @@ package backend.service;
 
 import backend.config.SessionInfo;
 import backend.model.Plan;
+import backend.repository.PlanRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlanService {
-    List<Plan> plans;
+    private PlanRepository planRepository;
+    private List<Plan> plans;
 
     public PlanService() {
-        // TODO: Read the data in plans table of the database to the list
-        plans = new ArrayList<>();
-        plans.add(new Plan("Play Tennis", "Wednesday", "09:45", "13:30", "daughter"));
+        planRepository = new PlanRepository();
+
+        plans = planRepository.getAllPlans();
     }
 
     public boolean addPlan(String name, String day, String startTime, String endTime) {
@@ -24,6 +26,7 @@ public class PlanService {
             plan = new Plan(name, day, startTime, endTime, "father");
         }
         plans.add(plan);
+        planRepository.createPlan(plan);
         return true;
     }
 
@@ -35,6 +38,7 @@ public class PlanService {
                 plan.setDay(day);
                 plan.setStart(startTime);
                 plan.setEnd(endTime);
+                planRepository.updatePlan(plan);
                 return true;
             }
         }
@@ -42,6 +46,7 @@ public class PlanService {
     }
 
     public List<Plan> getDaughterPlans() {
+        plans = planRepository.getAllPlans();
         List<Plan> daughterPlans = new ArrayList<>();
         for(Plan p: plans) {
             if(p.getOwner().equals("daughter")) {
@@ -52,6 +57,7 @@ public class PlanService {
     }
 
     public List<Plan> getFatherPlans() {
+        plans = planRepository.getAllPlans();
         List<Plan> fatherPlans = new ArrayList<>();
         for(Plan p: plans) {
             if(p.getOwner().equals("father")) {

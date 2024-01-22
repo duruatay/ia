@@ -2,19 +2,23 @@ package backend.service;
 
 import backend.config.SessionInfo;
 import backend.model.User;
+import backend.repository.UserRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class LoginService {
+    private UserRepository userRepository;
     private List<User> users;
 
 
     public LoginService() {
-        users = new ArrayList<>();
-        users.add(new User("daughter", "admin", true));
-        users.add(new User("father", "admin", false));
+        userRepository = new UserRepository();
+
+        userRepository.createUser(new User("daughter", "admin", true));
+        userRepository.createUser(new User("father", "admin", false));
+
+        users = userRepository.getAllUsers();
     }
 
 

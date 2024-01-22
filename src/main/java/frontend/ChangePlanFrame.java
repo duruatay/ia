@@ -49,7 +49,7 @@ public class ChangePlanFrame extends JFrame {
                 if(planController.changePlan(currentNameField.getText(),
                                             newNameField.getText(),
                                             dayField.getText(),
-                                            startTimeLabel.getText(),
+                                            startTimeField.getText(),
                                             endTimeField.getText())){
                     JOptionPane.showMessageDialog(ChangePlanFrame.this, "Plan changed successfully!");
                     dispose();

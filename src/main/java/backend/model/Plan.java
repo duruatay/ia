@@ -2,6 +2,7 @@ package backend.model;
 
 
 public class Plan {
+    private int id;
     private String name;
     private String day;
     private String start;
@@ -14,6 +15,14 @@ public class Plan {
         this.start = start;
         this.end = end;
         this.owner = owner;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

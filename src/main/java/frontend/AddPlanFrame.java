@@ -41,7 +41,7 @@ public class AddPlanFrame extends JFrame {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if (planController.addPlan(nameField.getText(), dayField.getText(), startTimeLabel.getText(), endTimeLabel.getText())) {
+                if (planController.addPlan(nameField.getText(), dayField.getText(), startTimeField.getText(), endTimeField.getText())) {
                     JOptionPane.showMessageDialog(AddPlanFrame.this, "Plan added successfully!");
                     dispose();
                 }else {
@@ -62,32 +62,8 @@ public class AddPlanFrame extends JFrame {
         add(endTimeField);
         add(new JLabel()); // Empty label for spacing
         add(addButton);
-
-        // Add action listener to the button
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Call a method to handle adding the plan with the provided inputs
-                addPlan();
-            }
-        });
     }
 
-    private void addPlan() {
-        // Retrieve inputs from the text fields
-        String name = nameField.getText();
-        String day = dayField.getText();
-        String startTime = startTimeField.getText();
-        String endTime = endTimeField.getText();
 
-        // Perform the logic to add the plan (you can modify this part based on your requirements)
-        System.out.println("Plan added: " + name + ", " + day + ", " + startTime + " - " + endTime);
-
-        // Clear the input fields after adding the plan
-        nameField.setText("");
-        dayField.setText("");
-        startTimeField.setText("");
-        endTimeField.setText("");
-    }
 }
 
