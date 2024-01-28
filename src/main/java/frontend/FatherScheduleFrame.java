@@ -1,14 +1,23 @@
 package frontend;
 
 import backend.controller.PlanController;
+import backend.model.Plan;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FatherScheduleFrame extends JFrame {
     private final PlanController planController = PlanController.getInstance();
+    String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+    String[] timeSlots = {"09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"};
+    ArrayList<JTextArea> textAreas;
+    JPanel schedule;
+    JPanel scheduleHeader;
+    JPanel schedulePanel;
 
     public FatherScheduleFrame() {
         // Initialize the frame
@@ -25,26 +34,21 @@ public class FatherScheduleFrame extends JFrame {
         setJMenuBar(menuBar);
 
         // Create the panel for the schedule.
-        JPanel schedulePanel = new JPanel();
-        schedulePanel.setLayout(new BorderLayout());
-
-        JPanel scheduleHeaders = createHeaderPanel();
-        JPanel schedule = createSchedulePanel();
-
-        schedulePanel.add(scheduleHeaders, BorderLayout.NORTH);
-        schedulePanel.add(schedule, BorderLayout.CENTER);
+        createSchedulePanel();
 
         add(schedulePanel, BorderLayout.CENTER);
 
         pack();
     }
 
+
+
     private void buildMenu(JMenu menu) {
         JMenuItem addItem = new JMenuItem("add plan");
         addItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AddPlanFrame().setVisible(true);
+                new AddPlanFrame(null, FatherScheduleFrame.this).setVisible(true);
             }
         });
 
@@ -93,31 +97,97 @@ public class FatherScheduleFrame extends JFrame {
         menu.add(notifs);
     }
 
-    private JPanel createHeaderPanel() {
-        JPanel headerPanel = new JPanel(new GridLayout(1, 8));
-        headerPanel.add(new JLabel("Time"));
-        String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-        for (int time = 0; time < 7; time++) {
-            headerPanel.add(new JLabel(days[time]));
-        }
-        return headerPanel;
+    protected void updateSchedulePanel() {
+        schedulePanel.removeAll();  // Remove the existing schedulePanel components
+        createHeaderPanel();
+        createSchedule();
+        schedulePanel.add(scheduleHeader, BorderLayout.NORTH);
+        schedulePanel.add(schedule, BorderLayout.CENTER);
+        validate();  // Validate the changes
+        repaint();   // Repaint the frame
     }
 
-    private JPanel createSchedulePanel() {
-        JPanel schedulePanel = new JPanel(new GridLayout(9, 8));
-        String[] timeSlots = {"9 AM", "10 AM", "11 AM", "12 PM", "1 PM", "2 PM", "3 PM", "4 PM", "5 PM"};
+    private void createSchedulePanel() {
+        schedulePanel = new JPanel();
+        schedulePanel.setLayout(new BorderLayout());
+
+        createHeaderPanel();
+        createSchedule();
+
+        schedulePanel.add(scheduleHeader, BorderLayout.NORTH);
+        schedulePanel.add(schedule, BorderLayout.CENTER);
+    }
+
+    private void createHeaderPanel() {
+        scheduleHeader = new JPanel(new GridLayout(1, 8));
+        scheduleHeader.add(new JLabel("Time"));
+        for (int time = 0; time < 7; time++) {
+            scheduleHeader.add(new JLabel(days[time]));
+        }
+    }
+
+    private void createSchedule() {
+        schedule = new JPanel(new GridLayout(9, 8));
+
+        setTextAreas();
 
         for (int time = 0; time < 9; time++) {
-            schedulePanel.add(new JLabel(timeSlots[time]));
+            schedule.add(new JLabel(timeSlots[time]));
 
-            for (int day = 0; day < 7; day++) {
-                JTextArea textArea = new JTextArea();
-                textArea.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                schedulePanel.add(textArea);
+            int dayIndex = time * 7;
+            int dayLimit = dayIndex + 7;
+            while (dayIndex < dayLimit) {
+                schedule.add(textAreas.get(dayIndex));
+                dayIndex++;
             }
         }
-
-        return schedulePanel;
     }
+
+    private void setTextAreas() {
+        textAreas = new ArrayList<>();
+
+        int count = 0;
+        while(count < 63) {
+            JTextArea ta = new JTextArea();
+            ta.setEditable(false);
+            ta.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            textAreas.add(ta);
+            count++;
+        }
+
+        fillTextAreas();
+    }
+
+    private void fillTextAreas() {
+        List<Plan> plans = planController.getFatherPlans();
+
+        for(Plan plan: plans) {
+            int column = -1;
+            for(int i = 0; i < days.length; i++) {
+                if(days[i].equals(plan.getDay())) {
+                    column = i;
+                }
+            }
+
+            int startRow = -1;
+            for(int i = 0; i < timeSlots.length; i++) {
+                if(timeSlots[i].substring(0, 2).equals(plan.getStart().substring(0, 2))) {
+                    startRow = i;
+                }
+            }
+
+            int endRow = -1;
+            for(int i = 0; i < timeSlots.length; i++) {
+                if(timeSlots[i].substring(0, 2).equals(plan.getEnd().substring(0, 2))) {
+                    endRow = i;
+                }
+            }
+
+            for(int i = (startRow * 7) + column; i < (endRow * 7) + column; i += 7) {
+                textAreas.get(i).setText(textAreas.get(i).getText() + "\n" + plan.getName());
+            }
+        }
+    }
+
 }
 

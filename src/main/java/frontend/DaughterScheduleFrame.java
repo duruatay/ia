@@ -45,7 +45,7 @@ public class DaughterScheduleFrame extends JFrame {
         addItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AddPlanFrame().setVisible(true);
+                new AddPlanFrame(DaughterScheduleFrame.this, null).setVisible(true);
             }
         });
 
@@ -91,6 +91,16 @@ public class DaughterScheduleFrame extends JFrame {
         menu.add(planner1);
         menu.add(planner2);
         menu.add(notifs);
+    }
+
+    protected void updateSchedulePanel() {
+        schedulePanel.removeAll();
+        createHeaderPanel();
+        createSchedule();
+        schedulePanel.add(scheduleHeader, BorderLayout.NORTH);
+        schedulePanel.add(schedule, BorderLayout.CENTER);
+        validate();
+        repaint();
     }
 
     private void createSchedulePanel() {

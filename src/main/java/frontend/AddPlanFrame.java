@@ -1,5 +1,6 @@
 package frontend;
 
+import backend.config.SessionInfo;
 import backend.controller.PlanController;
 import backend.service.PlanService;
 
@@ -15,7 +16,7 @@ public class AddPlanFrame extends JFrame {
     private JTextField startTimeField;
     private JTextField endTimeField;
 
-    public AddPlanFrame() {
+    public AddPlanFrame(DaughterScheduleFrame daughterScheduleFrame, FatherScheduleFrame fatherScheduleFrame) {
         // Set frame properties
         setTitle("Add Plan");
         setSize(300, 200);
@@ -47,6 +48,11 @@ public class AddPlanFrame extends JFrame {
                 }else {
                     JOptionPane.showMessageDialog(AddPlanFrame.this, "Plan could not be added!");
                     dispose();
+                }
+                if(SessionInfo.DAUGHTER_SESSION) {
+                    daughterScheduleFrame.updateSchedulePanel();
+                } else {
+                    fatherScheduleFrame.updateSchedulePanel();
                 }
             }
         });
