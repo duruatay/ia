@@ -30,7 +30,7 @@ public class WeeklyCalendar extends JFrame {
         // Create the table with the default model
         table = new JTable(model);
         table.setRowHeight(40);
-        table.getColumnModel().getColumn(0).setCellRenderer(new CustomCellRenderer(Set.of(4, 5, 6), 1, Color.PINK));
+        table.getColumnModel().getColumn(3).setCellRenderer(new CustomCellRenderer(Set.of(4, 5, 6), 1, Color.PINK));
 
         // Create a scroll pane for the table
         scrollPane = new JScrollPane(table);

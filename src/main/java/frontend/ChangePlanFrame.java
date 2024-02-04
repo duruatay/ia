@@ -1,5 +1,6 @@
 package frontend;
 
+import backend.config.SessionInfo;
 import backend.controller.PlanController;
 import backend.service.PlanService;
 
@@ -16,7 +17,7 @@ public class ChangePlanFrame extends JFrame {
     private JTextField startTimeField;
     private JTextField endTimeField;
 
-    public ChangePlanFrame() {
+    public ChangePlanFrame(DaughterScheduleFrame daughterScheduleFrame, FatherScheduleFrame fatherScheduleFrame) {
         // Set frame properties
         setTitle("Change Plan");
         setSize(300, 200);
@@ -56,6 +57,11 @@ public class ChangePlanFrame extends JFrame {
                 }else {
                     JOptionPane.showMessageDialog(ChangePlanFrame.this, "Plan could not be changed!");
                     dispose();
+                }
+                if(SessionInfo.DAUGHTER_SESSION) {
+                    daughterScheduleFrame.updateSchedulePanel();
+                } else {
+                    fatherScheduleFrame.updateSchedulePanel();
                 }
             }
         });

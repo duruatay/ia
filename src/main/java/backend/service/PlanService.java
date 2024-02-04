@@ -32,8 +32,13 @@ public class PlanService {
 
     public boolean changePlan(String currentName, String newName, String day, String startTime, String endTime) {
         // TODO: Add validation logic on the input data. If valid add the plan and return true, else return false.
+        String owner = "father";
+        if(SessionInfo.DAUGHTER_SESSION) {
+            owner = "daughter";
+        }
+
         for(Plan plan: plans) {
-            if(currentName.equals(plan.getName())) {
+            if(currentName.equals(plan.getName()) && plan.getOwner().equals(owner)) {
                 plan.setName(newName);
                 plan.setDay(day);
                 plan.setStart(startTime);
