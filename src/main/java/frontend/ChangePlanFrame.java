@@ -58,6 +58,7 @@ public class ChangePlanFrame extends JFrame {
                     JOptionPane.showMessageDialog(ChangePlanFrame.this, "Plan could not be changed!");
                     dispose();
                 }
+
                 if(SessionInfo.DAUGHTER_SESSION) {
                     daughterScheduleFrame.updateSchedulePanel();
                 } else {

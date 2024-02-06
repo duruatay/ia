@@ -46,13 +46,11 @@ public class FatherScheduleFrame extends JFrame {
 
 
     protected void updateSchedulePanel() {
-        //schedulePanel.removeAll();
-        //createHeaderPanel();
-        //createSchedule();
-        //schedulePanel.add(scheduleHeader, BorderLayout.NORTH);
-        //schedulePanel.add(schedule, BorderLayout.CENTER);
-        //validate();
-        //repaint();
+        remove(schedulePanel);
+        createSchedulePanel();
+        add(schedulePanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
     }
 
     private void buildMenu(JMenu menu) {
@@ -117,15 +115,66 @@ public class FatherScheduleFrame extends JFrame {
     }
 
     private void createSchedule() {
-        for (int i = 0; i < 24; i++) {
+        for(int i = 0; i < 24; i++) {
             model.setValueAt(i + ":00 - " + (i + 1) + ":00", i, 0);
         }
+        fillTableModel();
 
         table = new JTable(model);
         table.setRowHeight(40);
-        table.getColumnModel().getColumn(3).setCellRenderer(new DefaultTableCellRenderer());
+
+        for(int i = 0; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(new MultiLineTableCellRenderer());
+        }
 
         scrollPane = new JScrollPane(table);
     }
+
+    private void fillTableModel() {
+        List<Plan> plans = planController.getFatherPlans();
+
+        clearTableModel();
+
+        for(Plan p: plans) {
+            String startTime = p.getStart();
+            String endTime = p.getEnd();
+            String day = p.getDay();
+
+            int startHour = Integer.parseInt(startTime.split(":")[0]);
+            int endHour = Integer.parseInt(endTime.split(":")[0]);
+
+            int col = -1;
+            for(int i = 0; i < columnNames.length; i++) {
+                if(day.equalsIgnoreCase(columnNames[i])) {
+                    col = i;
+                    break;
+                }
+            }
+
+            for(int i = 0; i < model.getRowCount(); i++) {
+                int val = Integer.parseInt(model.getValueAt(i, 0).toString().split(":")[0]);
+                if(startHour == val){
+                    int rowCount = endHour - startHour;
+
+                    while(rowCount >= 0 && (i + rowCount) < model.getRowCount()) {
+                        String existingCellValue = (model.getValueAt(i + rowCount, col) != null) ? model.getValueAt(i + rowCount, col).toString() : "";
+                        String newCellVal = existingCellValue + (existingCellValue.isEmpty() ? "" : "\n") + p.getName();
+                        model.setValueAt(newCellVal, i + rowCount, col);
+                        rowCount--;
+                    }
+                }
+            }
+        }
+
+    }
+
+    private void clearTableModel() {
+        for (int i = 0; i < model.getRowCount(); i++) {
+            for (int j = 1; j < model.getColumnCount(); j++) {
+                model.setValueAt("", i, j);
+            }
+        }
+    }
+
 }
 
