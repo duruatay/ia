@@ -79,4 +79,13 @@ public class PlanService {
     public void setPlans(List<Plan> plans) {
         this.plans = plans;
     }
+
+    public Plan getPlanByName(String planName) {
+        for(Plan p: plans) {
+            if(p.getName().equalsIgnoreCase(planName)) {
+                return p;
+            }
+        }
+        return null;
+    }
 }

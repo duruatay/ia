@@ -28,6 +28,10 @@ public class PlanController {
         return planService.changePlan(currentName, newName, day, startTime, endTime);
     }
 
+    public Plan getPlanByName(String planName) {
+        return planService.getPlanByName(planName);
+    }
+
     public List<Plan> getPlans() {
         return planService.getPlans();
     }

@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +30,7 @@ public class DaughterScheduleFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Daughters' Weekly Planner");
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(400, 300));
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         // Create the panel for menu.
         JMenuBar menuBar =new JMenuBar();
@@ -121,6 +123,19 @@ public class DaughterScheduleFrame extends JFrame {
 
         table = new JTable(model);
         table.setRowHeight(40);
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                int row = table.rowAtPoint(e.getPoint());
+                int col = table.columnAtPoint(e.getPoint());
+
+                String plansStr = (String) table.getModel().getValueAt(row, col);
+                List<String> planNames = List.of(plansStr.split("\n"));
+
+                new PlanFrame(planNames).setVisible(true);
+            }
+        });
 
         for(int i = 0; i < table.getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setCellRenderer(new MultiLineTableCellRenderer());
