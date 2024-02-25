@@ -1,5 +1,6 @@
 package frontend;
 
+import backend.config.SessionInfo;
 import backend.controller.PlanController;
 import backend.model.Plan;
 
@@ -75,7 +76,7 @@ public class DaughterScheduleFrame extends JFrame {
             }
         });
 
-        JMenuItem planner2 = new JMenuItem("Duru's Planner");
+        JMenuItem planner2 = new JMenuItem("Daughter's Planner");
         planner2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -85,19 +86,14 @@ public class DaughterScheduleFrame extends JFrame {
             }
         });
 
-        JMenuItem notifs = new JMenuItem("Notifications");
-        notifs.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new NotificationsFrame().setVisible(true);
-            }
-        });
 
-        menu.add(addItem);
-        menu.add(changeItem);
         menu.add(planner1);
         menu.add(planner2);
-        menu.add(notifs);
+        if (SessionInfo.DAUGHTER_SESSION) {
+            menu.add(addItem);
+            menu.add(changeItem);
+        }
+
     }
 
     protected void updateSchedulePanel() {

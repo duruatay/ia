@@ -45,6 +45,8 @@ public class PlanService {
                 plan.setEnd(endTime);
                 planRepository.updatePlan(plan);
                 return true;
+            } else {
+                return false;
             }
         }
         return false;
