@@ -68,12 +68,11 @@ public class LoginPage extends JFrame {
                     JOptionPane.showMessageDialog(LoginPage.this, "Login failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
                 }else if(user.isDaughter()) {
                     JOptionPane.showMessageDialog(LoginPage.this, "Login successful!");
-                    DaughterScheduleFrame dghtr = new DaughterScheduleFrame();
+                    DaughterScheduleFrame daughter = new DaughterScheduleFrame();
                     dispose();
                 }else {
                     JOptionPane.showMessageDialog(LoginPage.this, "Login successful!");
                     FatherScheduleFrame father = new FatherScheduleFrame();
-                    father.setVisible(true);
                     dispose();
                 }
 
