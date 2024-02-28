@@ -28,12 +28,21 @@ public class PlanController {
         return planService.changePlan(currentName, newName, day, startTime, endTime);
     }
 
+    public boolean deletePlan(Plan plan) {
+        planService.deletePlan(plan);
+        return true;
+    }
+
     public Plan getPlanByName(String planName) {
         return planService.getPlanByName(planName);
     }
 
     public List<Plan> getPlans() {
         return planService.getPlans();
+    }
+
+    public List<Plan> getFilteredPlans(List<String> planNames) {
+        return planService.getFilteredPlans(planNames);
     }
 
     public List<Plan> getDaughterPlans() {

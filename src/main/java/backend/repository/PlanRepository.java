@@ -82,7 +82,19 @@ public class PlanRepository {
         } catch (SQLException e) {
             System.err.println("SQL EXCEPTION " + e.getMessage());
         }
+    }
 
+    public void deletePlan(Plan plan) {
+        String query = """
+                    DELETE FROM Plan WHERE id = TARGET_ID;
+                """;
 
+        query = query.replace("TARGET_ID", String.valueOf(plan.getId()));
+        try {
+            dbConn.createStatement().executeUpdate(query);
+            System.out.println("Deleted the Plan " + plan.getName() + " successfully");
+        } catch (SQLException e) {
+            System.err.println("SQL EXCEPTION " + e.getMessage());
+        }
     }
 }

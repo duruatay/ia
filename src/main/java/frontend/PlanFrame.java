@@ -5,7 +5,8 @@ import backend.model.Plan;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 public class PlanFrame extends JFrame {
@@ -13,6 +14,8 @@ public class PlanFrame extends JFrame {
     private List<String> planNames;
     private JScrollPane plansScrollPane;
     private JPanel mainPlanPanel;
+    private JPanel buttonsPanel;
+    private JButton deletePlanButton;
 
     public PlanFrame(List<String> planNames) {
         this.planNames = planNames;
@@ -24,8 +27,10 @@ public class PlanFrame extends JFrame {
         setLayout(new BorderLayout());
 
         createPlanScrollPane();
+        createButtonsPanel();
 
         add(plansScrollPane, BorderLayout.CENTER);
+        add(buttonsPanel, BorderLayout.SOUTH);
     }
 
     private void createPlanScrollPane() {
@@ -69,4 +74,18 @@ public class PlanFrame extends JFrame {
         }
     }
 
+    private void createButtonsPanel() {
+        buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new FlowLayout());
+
+        deletePlanButton = new JButton("Delete Plans");
+        deletePlanButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                new DeletePlanFrame(planNames).setVisible(true);
+            }
+        });
+
+        buttonsPanel.add(deletePlanButton);
+    }
 }

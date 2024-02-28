@@ -88,4 +88,20 @@ public class PlanService {
         }
         return null;
     }
+
+    public void deletePlan(Plan plan) {
+        planRepository.deletePlan(plan);
+    }
+
+    public List<Plan> getFilteredPlans(List<String> planNames) {
+        List<Plan> plans = planRepository.getAllPlans();
+        List<Plan> filteredPlans = new ArrayList<>();
+
+        for(Plan plan: plans) {
+            if(planNames.contains(plan.getName())) {
+                filteredPlans.add(plan);
+            }
+        }
+        return filteredPlans;
+    }
 }
