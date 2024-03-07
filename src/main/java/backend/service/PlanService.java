@@ -13,12 +13,10 @@ public class PlanService {
 
     public PlanService() {
         planRepository = new PlanRepository();
-
         plans = planRepository.getAllPlans();
     }
 
     public boolean addPlan(String name, String day, String startTime, String endTime) {
-        // TODO: Add validation logic on the input data. If valid add the plan and return true, else return false.
         Plan plan;
         if(SessionInfo.DAUGHTER_SESSION) {
             plan = new Plan(name, day, startTime, endTime, "daughter");
@@ -31,7 +29,6 @@ public class PlanService {
     }
 
     public boolean changePlan(String currentName, String newName, String day, String startTime, String endTime) {
-        // TODO: Add validation logic on the input data. If valid add the plan and return true, else return false.
         String owner = "father";
         if(SessionInfo.DAUGHTER_SESSION) {
             owner = "daughter";
@@ -78,10 +75,6 @@ public class PlanService {
         return plans;
     }
 
-    public void setPlans(List<Plan> plans) {
-        this.plans = plans;
-    }
-
     public Plan getPlanByName(String planName) {
         for(Plan p: plans) {
             if(p.getName().equalsIgnoreCase(planName)) {
@@ -93,6 +86,7 @@ public class PlanService {
 
     public void deletePlan(Plan plan) {
         planRepository.deletePlan(plan);
+        plans.remove(plan);
     }
 
     public List<Plan> getFilteredPlans(List<String> planNames) {
@@ -105,5 +99,15 @@ public class PlanService {
             }
         }
         return filteredPlans;
+    }
+
+    public void clearAllDaughterPlans() {
+        plans.removeAll(getDaughterPlans());
+        planRepository.deleteAllPlans();
+    }
+
+    public void clearAllFatherPlans() {
+        plans.removeAll(getFatherPlans());
+        planRepository.deleteAllPlans();
     }
 }

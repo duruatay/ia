@@ -24,6 +24,8 @@ public class DaughterScheduleFrame extends JFrame {
     private String[] columnNames = {"Hour", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
     private String[][] data = new String[24][7];
     private DefaultTableModel model = new DefaultTableModel(data, columnNames);
+    private JPanel buttonsPanel;
+    private JButton clearAllButton;
 
 
     public DaughterScheduleFrame() {
@@ -41,8 +43,10 @@ public class DaughterScheduleFrame extends JFrame {
         setJMenuBar(menuBar);
 
         createSchedulePanel();
+        createButtonsPanel();
 
         add(schedulePanel, BorderLayout.CENTER);
+        add(buttonsPanel, BorderLayout.SOUTH);
         setVisible(true);
         pack();
     }
@@ -186,6 +190,28 @@ public class DaughterScheduleFrame extends JFrame {
         }
     }
 
+    private void createButtonsPanel() {
+        buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new FlowLayout());
 
+        clearAllButton = new JButton("Clear All");
+        clearAllButton.setHorizontalAlignment(SwingConstants.RIGHT);
+        clearAllButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if(!SessionInfo.DAUGHTER_SESSION) {
+                    JOptionPane.showMessageDialog(DaughterScheduleFrame.this, "You do not have access to clear daughters schedule.", "Access Denied", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    int selection = JOptionPane.showConfirmDialog(DaughterScheduleFrame.this, "Do you confirm clearing the schedule completely?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if(selection == JOptionPane.YES_OPTION) {
+                        planController.clearAllDaughterPlans();
+                        updateSchedulePanel();
+                    }
+                }
+            }
+        });
+
+        buttonsPanel.add(clearAllButton);
+    }
 }
 

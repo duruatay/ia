@@ -1,5 +1,6 @@
 package backend.repository;
 
+import backend.config.SessionInfo;
 import backend.model.Plan;
 import backend.model.User;
 
@@ -93,6 +94,23 @@ public class PlanRepository {
         try {
             dbConn.createStatement().executeUpdate(query);
             System.out.println("Deleted the Plan " + plan.getName() + " successfully");
+        } catch (SQLException e) {
+            System.err.println("SQL EXCEPTION " + e.getMessage());
+        }
+    }
+
+    public void deleteAllPlans() {
+        String query = """
+                    DELETE FROM Plan WHERE owner = "DEFAULT_OWNER";
+                """;
+        if(SessionInfo.DAUGHTER_SESSION) {
+            query = query.replace("DEFAULT_OWNER", "daughter");
+        } else {
+            query = query.replace("DEFAULT_OWNER", "father");
+        }
+        try {
+            dbConn.createStatement().executeUpdate(query);
+            System.out.println("Deleted the all plans successfully");
         } catch (SQLException e) {
             System.err.println("SQL EXCEPTION " + e.getMessage());
         }

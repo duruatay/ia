@@ -52,4 +52,12 @@ public class PlanController {
     public List<Plan> getFatherPlans() {
         return planService.getFatherPlans();
     }
+
+    public void clearAllDaughterPlans() {
+        planService.clearAllDaughterPlans();
+    }
+
+    public void clearAllFatherPlans() {
+        planService.clearAllFatherPlans();
+    }
 }
